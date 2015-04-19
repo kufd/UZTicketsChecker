@@ -12,6 +12,10 @@ public class UZTicketsChecker
 {
     public static void main(String[] args) {
 
+        String stationFrom = "Київ";
+        String stationTo = "Ковель";
+        String date = "19.04.2015";
+
         FirefoxProfile profile = new FirefoxProfile();
         profile.setPreference("intl.accept_languages", "uk");
 
@@ -20,36 +24,36 @@ public class UZTicketsChecker
         driver.get("http://booking.uz.gov.ua");
 
         WebElement inputFrom = driver.findElement(By.name("station_from"));
-        inputFrom.sendKeys("Київ");
+        inputFrom.sendKeys(stationFrom);
 
         (new WebDriverWait(driver, 10)).until(
-                ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.autosuggest div[title=Київ]"))
+                ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.autosuggest div[title=" + stationFrom + "]"))
         );
 
-        WebElement suggestionFrom = driver.findElement(By.cssSelector("div.autosuggest div[title=Київ]"));
+        WebElement suggestionFrom = driver.findElement(By.cssSelector("div.autosuggest div[title=" + stationFrom + "]"));
         suggestionFrom.click();
 
 
 
         WebElement inputTo = driver.findElement(By.name("station_till"));
-        inputTo.sendKeys("Ковель");
+        inputTo.sendKeys(stationTo);
 
         (new WebDriverWait(driver, 10)).until(
-                ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.autosuggest div[title=Ковель]"))
+                ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.autosuggest div[title=" + stationTo + "]"))
         );
 
-        WebElement suggestionTo = driver.findElement(By.cssSelector("div.autosuggest div[title=Ковель]"));
+        WebElement suggestionTo = driver.findElement(By.cssSelector("div.autosuggest div[title=" + stationTo + "]"));
         suggestionTo.click();
 
 
-        ((JavascriptExecutor)driver).executeScript("document.getElementById('date_dep').value = '19.04.2015'");
+        ((JavascriptExecutor)driver).executeScript("document.getElementById('date_dep').value = '" + date + "'");
 
 
         WebElement buttonSearch = driver.findElement(By.name("search"));
         buttonSearch.click();
 
 
-        (new WebDriverWait(driver, 10)).until(
+        (new WebDriverWait(driver, 60)).until(
                 ExpectedConditions.invisibilityOfElementLocated(By.id("vToolsAlphaBg"))
         );
 
