@@ -134,7 +134,8 @@ public class UZTicketsChecker
 
         boolean result = (driver.findElements(By.id("ts_res")).size() > 0 && driver.findElement(By.id("ts_res")).isDisplayed());
 
-        if (result && trainNumber != "")
+        //filter by traint number and wagon type
+        if (result && !trainNumber.equals(""))
         {
             result = false;
 
